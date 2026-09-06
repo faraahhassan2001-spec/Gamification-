@@ -1119,13 +1119,11 @@ export const convertWallets = [
   { id: "e-wallet", name: "E-Wallet Type", balance: 456.789, tone: "from-slate-600 to-slate-700" },
 ];
 
-/* Cash Conversion catalog item (Points & Marketplace) */
-export const cashConversionOffer = { points: 100, jod: 10 };
-
-export const conversionWalletOptions = [
-  { id: "main", name: "Main Wallet", tone: "from-blue-600 to-blue-700" },
-  { id: "commission", name: "Commission Wallet", tone: "from-emerald-700 to-emerald-800" },
-  { id: "advance", name: "Advance Payment Wallet", tone: "from-amber-600 to-amber-700" },
+/* Points conversion options (Convert Points page) */
+export const pointsConversionOptions = [
+  { id: "conv-100", points: 100, jod: 10 },
+  { id: "conv-200", points: 200, jod: 20 },
+  { id: "conv-500", points: 500, jod: 50 },
 ];
 
 /* Points activity (design) */

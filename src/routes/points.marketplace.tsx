@@ -3,8 +3,6 @@ import { useState } from "react";
 import { GamScreen, PrimaryButton } from "@/components/gamification/ui";
 import { CatalogItemRow } from "@/components/gamification/CatalogItemRow";
 import { CatalogRedeemDialogs } from "@/components/gamification/CatalogRedeemDialogs";
-import { CashConversionRow } from "@/components/gamification/CashConversionRow";
-import { ConvertPointsSheet } from "@/components/gamification/ConvertPointsSheet";
 import { formatPoints, marketplaceCatalog } from "@/lib/gamification";
 import { redeemItem, usePointsBalance } from "@/lib/gamification-state";
 
@@ -31,7 +29,6 @@ function AllRedeemableItemsScreen() {
   const [successOpen, setSuccessOpen] = useState(false);
   const [redeemedName, setRedeemedName] = useState("");
   const [redeemedPoints, setRedeemedPoints] = useState(0);
-  const [convertOpen, setConvertOpen] = useState(false);
 
   const balance = usePointsBalance();
   const selected = marketplaceCatalog.find((m) => m.id === itemId) ?? null;
@@ -75,10 +72,7 @@ function AllRedeemableItemsScreen() {
             onSelect={() => setItemId(itemId === item.id ? null : item.id)}
           />
         ))}
-        <CashConversionRow onSelect={() => setConvertOpen(true)} />
       </div>
-
-      <ConvertPointsSheet open={convertOpen} onOpenChange={setConvertOpen} />
 
       <CatalogRedeemDialogs
         selected={selected}

@@ -4,8 +4,6 @@ import { ChevronRight, History as HistoryIcon } from "lucide-react";
 import { GamCard, GamScreen, PrimaryButton, WalletBanner } from "@/components/gamification/ui";
 import { CatalogItemRow } from "@/components/gamification/CatalogItemRow";
 import { CatalogRedeemDialogs } from "@/components/gamification/CatalogRedeemDialogs";
-import { CashConversionRow } from "@/components/gamification/CashConversionRow";
-import { ConvertPointsSheet } from "@/components/gamification/ConvertPointsSheet";
 import { formatPoints, marketplaceCatalog, points } from "@/lib/gamification";
 import { redeemItem, usePointsBalance } from "@/lib/gamification-state";
 
@@ -35,7 +33,6 @@ function PointsMarketplaceScreen() {
   const [successOpen, setSuccessOpen] = useState(false);
   const [redeemedName, setRedeemedName] = useState("");
   const [redeemedPoints, setRedeemedPoints] = useState(0);
-  const [convertOpen, setConvertOpen] = useState(false);
 
   const balance = usePointsBalance();
   const selected = marketplaceCatalog.find((m) => m.id === itemId) ?? null;
@@ -61,7 +58,17 @@ function PointsMarketplaceScreen() {
         </PrimaryButton>
       }
     >
-      <WalletBanner points={balance} />
+      <WalletBanner
+        points={balance}
+        right={
+          <Link
+            to="/points/convert"
+            className="rounded-full bg-white px-4 py-1.5 text-[13px] font-medium text-primary"
+          >
+            Convert
+          </Link>
+        }
+      />
 
       <GamCard>
         <div className="grid grid-cols-2 gap-3 text-center">
@@ -102,10 +109,7 @@ function PointsMarketplaceScreen() {
             onSelect={() => setItemId(itemId === item.id ? null : item.id)}
           />
         ))}
-        <CashConversionRow onSelect={() => setConvertOpen(true)} />
       </div>
-
-      <ConvertPointsSheet open={convertOpen} onOpenChange={setConvertOpen} />
 
       <CatalogRedeemDialogs
         selected={selected}
