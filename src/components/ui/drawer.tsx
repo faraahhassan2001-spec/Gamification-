@@ -4,7 +4,12 @@ import { Drawer as DrawerPrimitive } from "vaul";
 import { cn } from "@/lib/utils";
 
 const Drawer = ({
-  shouldScaleBackground = true,
+  // Requires a [data-vaul-drawer-wrapper] element around the app content to
+  // scale, which this app doesn't have. Left enabled, vaul keeps retrying to
+  // find that wrapper and never does — under production's faster render
+  // timing that retry turns into a runaway loop that pins the CPU and
+  // crashes the tab. Default to false until a wrapper element is added.
+  shouldScaleBackground = false,
   ...props
 }: React.ComponentProps<typeof DrawerPrimitive.Root>) => (
   <DrawerPrimitive.Root shouldScaleBackground={shouldScaleBackground} {...props} />

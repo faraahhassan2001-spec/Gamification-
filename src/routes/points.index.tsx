@@ -4,6 +4,8 @@ import { ChevronRight, History as HistoryIcon } from "lucide-react";
 import { GamCard, GamScreen, PrimaryButton, WalletBanner } from "@/components/gamification/ui";
 import { CatalogItemRow } from "@/components/gamification/CatalogItemRow";
 import { CatalogRedeemDialogs } from "@/components/gamification/CatalogRedeemDialogs";
+import { CashConversionRow } from "@/components/gamification/CashConversionRow";
+import { ConvertPointsSheet } from "@/components/gamification/ConvertPointsSheet";
 import { formatPoints, marketplaceCatalog, points } from "@/lib/gamification";
 import { redeemItem, usePointsBalance } from "@/lib/gamification-state";
 
@@ -33,6 +35,7 @@ function PointsMarketplaceScreen() {
   const [successOpen, setSuccessOpen] = useState(false);
   const [redeemedName, setRedeemedName] = useState("");
   const [redeemedPoints, setRedeemedPoints] = useState(0);
+  const [convertOpen, setConvertOpen] = useState(false);
 
   const balance = usePointsBalance();
   const selected = marketplaceCatalog.find((m) => m.id === itemId) ?? null;
@@ -53,36 +56,12 @@ function PointsMarketplaceScreen() {
         </Link>
       }
       footer={
-        <>
-          <div className="rounded-2xl bg-card p-4 shadow-[0_2px_10px_rgba(15,42,80,0.06)]">
-            <div className="flex items-center justify-between border-b border-border pb-3 text-[14px]">
-              <span className="text-muted-foreground">You Spend</span>
-              <span className="font-semibold text-foreground">
-                {formatPoints(selected?.points ?? 0)} pts
-              </span>
-            </div>
-            <div className="flex items-center justify-between pt-3 text-[14px]">
-              <span className="text-primary">Item</span>
-              <span className="font-semibold text-primary">{selected?.name ?? "—"}</span>
-            </div>
-          </div>
-          <PrimaryButton disabled={!canRedeem} onClick={() => setConfirmOpen(true)}>
-            Redeem
-          </PrimaryButton>
-        </>
+        <PrimaryButton disabled={!canRedeem} onClick={() => setConfirmOpen(true)}>
+          Redeem
+        </PrimaryButton>
       }
     >
-      <WalletBanner
-        points={balance}
-        right={
-          <Link
-            to="/points/convert"
-            className="rounded-full bg-white px-4 py-1.5 text-[13px] font-medium text-primary"
-          >
-            Convert
-          </Link>
-        }
-      />
+      <WalletBanner points={balance} />
 
       <GamCard>
         <div className="grid grid-cols-2 gap-3 text-center">
@@ -123,7 +102,10 @@ function PointsMarketplaceScreen() {
             onSelect={() => setItemId(itemId === item.id ? null : item.id)}
           />
         ))}
+        <CashConversionRow onSelect={() => setConvertOpen(true)} />
       </div>
+
+      <ConvertPointsSheet open={convertOpen} onOpenChange={setConvertOpen} />
 
       <CatalogRedeemDialogs
         selected={selected}

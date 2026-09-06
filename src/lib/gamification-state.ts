@@ -180,3 +180,19 @@ export function redeemItem(name: string, points: number) {
   ];
   emit();
 }
+
+/** Convert points to a wallet: deducts points and records a history entry. */
+export function convertPoints(points: number) {
+  pointsSpent += points;
+  extraActivity = [
+    {
+      id: `pa-convert-${Date.now()}`,
+      date: claimDate,
+      label: "Points Converted",
+      amount: -points,
+      type: "Converted",
+    },
+    ...extraActivity,
+  ];
+  emit();
+}
